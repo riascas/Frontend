@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="BLL_ModuloDos">
+      <HintPath>..\Libs\BLL_ModuloDos.dll</HintPath>
+    </Reference>
+    <Reference Include="DAL_ModuloDos">
+      <HintPath>..\Libs\DAL_ModuloDos.dll</HintPath>
+    </Reference>
+    <Reference Include="Entidades">
+      <HintPath>..\Libs\Entidades.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
