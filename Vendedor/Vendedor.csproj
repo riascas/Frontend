@@ -1,9 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
-
+  <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="BLL">
+      <HintPath>..\Libs\BLL.dll</HintPath>
+    </Reference>
+    <Reference Include="DAL">
+      <HintPath>..\Libs\DAL.dll</HintPath>
+    </Reference>
+    <Reference Include="ENTITY">
+      <HintPath>..\Libs\ENTITY.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
