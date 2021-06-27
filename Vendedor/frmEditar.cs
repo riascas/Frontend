@@ -85,6 +85,7 @@ namespace LoginAdministradorFront
             try
             {
                 _bManejadorUsuarios.modicarUsuario(usuarioAModificar);
+                MessageBox.Show("El usuario ha sido modificado");
             }
             catch (BLL_ModuloDos.Excepciones.ExcepcionErrorGenerico ex)
             {

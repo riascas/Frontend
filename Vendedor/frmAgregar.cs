@@ -19,9 +19,8 @@ namespace LoginAdministradorFront
         public frmAgregar()
         {
             _autheticationService = (IAutheticationService)Program.ServiceProvider.GetService(typeof(IAutheticationService));
-            InitializeComponent();
-            InitializeComponent();
             BManejadorRoles _BManejadorRoles = new BManejadorRoles();
+            InitializeComponent();
 
             try
             {
@@ -61,6 +60,8 @@ namespace LoginAdministradorFront
                 Direccion = direccion
             };
 
+
+
             BManejadorUsuarios manejadorUsuario = new BManejadorUsuarios();
             if (chkdesactivar.Checked==true)
             {
@@ -86,10 +87,11 @@ namespace LoginAdministradorFront
                 }
 
             }
-
+            
             try
             {
                 _bManejadorUsuarios.altaUsuario(usuario, txtcontraseña.Text, txtconfirmarcontraseña.Text);
+                MessageBox.Show("El usuario ha sido dado de alta.");
             }
             catch (BLL_ModuloDos.Excepciones.ExcepcionErrorGenerico exe)
             {
