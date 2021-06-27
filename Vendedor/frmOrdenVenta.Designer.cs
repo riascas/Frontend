@@ -29,6 +29,7 @@ namespace Vendedor
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txbProducto = new System.Windows.Forms.TextBox();
             this.txbCantidad = new System.Windows.Forms.TextBox();
             this.btnProducto = new System.Windows.Forms.Button();
@@ -52,7 +53,9 @@ namespace Vendedor
             this.lblFechaTarjeta = new System.Windows.Forms.Label();
             this.lblNombreTarjet = new System.Windows.Forms.Label();
             this.lblCvcTarjeta = new System.Windows.Forms.Label();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dtgvProductos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // txbProducto
@@ -68,6 +71,7 @@ namespace Vendedor
             this.txbCantidad.Name = "txbCantidad";
             this.txbCantidad.Size = new System.Drawing.Size(127, 26);
             this.txbCantidad.TabIndex = 1;
+            this.txbCantidad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbCantidad_KeyPress);
             // 
             // btnProducto
             // 
@@ -165,6 +169,7 @@ namespace Vendedor
             this.txbCvc.Name = "txbCvc";
             this.txbCvc.Size = new System.Drawing.Size(115, 26);
             this.txbCvc.TabIndex = 6;
+            this.txbCvc.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbCvc_KeyPress);
             // 
             // txbFechaTarjeta
             // 
@@ -172,6 +177,7 @@ namespace Vendedor
             this.txbFechaTarjeta.Name = "txbFechaTarjeta";
             this.txbFechaTarjeta.Size = new System.Drawing.Size(115, 26);
             this.txbFechaTarjeta.TabIndex = 7;
+            this.txbFechaTarjeta.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbFechaTarjeta_KeyPress);
             // 
             // txbNombreTarjeta
             // 
@@ -186,6 +192,7 @@ namespace Vendedor
             this.txbNumeroTarjeta.Name = "txbNumeroTarjeta";
             this.txbNumeroTarjeta.Size = new System.Drawing.Size(115, 26);
             this.txbNumeroTarjeta.TabIndex = 9;
+            this.txbNumeroTarjeta.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbNumeroTarjeta_KeyPress);
             // 
             // btnGuardarOrden
             // 
@@ -263,6 +270,10 @@ namespace Vendedor
             this.lblCvcTarjeta.TabIndex = 18;
             this.lblCvcTarjeta.Text = "CVC";
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // frmOrdenVenta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -289,6 +300,7 @@ namespace Vendedor
             this.Name = "frmOrdenVenta";
             this.Text = "frmFacturas";
             ((System.ComponentModel.ISupportInitialize)(this.dtgvProductos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -319,5 +331,6 @@ namespace Vendedor
         private System.Windows.Forms.Label lblFechaTarjeta;
         private System.Windows.Forms.Label lblNombreTarjet;
         private System.Windows.Forms.Label lblCvcTarjeta;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

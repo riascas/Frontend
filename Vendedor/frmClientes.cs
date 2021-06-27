@@ -70,7 +70,7 @@ namespace Vendedor
         }
         private void btnGuardarCliente_Click(object sender, EventArgs e)
         {
-            var textBoxCollection = new[] { txbNombre,txbApellido,txbDni,txbDni,txbProvincia,txbLocalidad,txbCalle,txbAltura,txbCp };
+            var textBoxCollection = new[] { txbNombre,txbApellido,txbDni,txbProvincia,txbLocalidad,txbCalle,txbAltura,txbCp };
             bool camposCompletos = textBoxCollection.Any(t => String.IsNullOrWhiteSpace(t.Text));
             if(camposCompletos == false)
             {
@@ -162,6 +162,38 @@ namespace Vendedor
         private void txbIngreseDni_Click(object sender, EventArgs e)
         {
             txbIngreseDni.Clear();
+        }
+
+        private void txbDni_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            soloNumeros(sender, e, txbDni);
+        }
+
+        private void txbAltura_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            soloNumeros(sender, e, txbAltura);
+        }
+
+        private void txbCp_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            soloNumeros(sender, e, txbCp);
+        }
+
+        private void txbIngreseDni_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            soloNumeros(sender, e, txbIngreseDni);
+        }
+
+        public void soloNumeros(object sender, KeyPressEventArgs e, TextBox txb)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+            (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+                errorProvider1.SetError(txb, "No se admiten letras solo numeros");
+            }
+            else
+                errorProvider1.Clear();
         }
     }
 }

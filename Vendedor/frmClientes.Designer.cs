@@ -29,6 +29,7 @@ namespace Vendedor
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnBuscarCliente = new System.Windows.Forms.Button();
             this.txbIngreseDni = new System.Windows.Forms.TextBox();
             this.dtgvClientes = new System.Windows.Forms.DataGridView();
@@ -58,8 +59,10 @@ namespace Vendedor
             this.label1 = new System.Windows.Forms.Label();
             this.btnOrdenDeVenta = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dtgvClientes)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnBuscarCliente
@@ -81,6 +84,7 @@ namespace Vendedor
             this.txbIngreseDni.TabIndex = 1;
             this.txbIngreseDni.Text = "   Ingrese DNI";
             this.txbIngreseDni.Click += new System.EventHandler(this.txbIngreseDni_Click);
+            this.txbIngreseDni.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbIngreseDni_KeyPress);
             // 
             // dtgvClientes
             // 
@@ -182,6 +186,7 @@ namespace Vendedor
             this.txbDni.Name = "txbDni";
             this.txbDni.Size = new System.Drawing.Size(115, 26);
             this.txbDni.TabIndex = 7;
+            this.txbDni.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbDni_KeyPress);
             // 
             // txbProvincia
             // 
@@ -210,6 +215,7 @@ namespace Vendedor
             this.txbAltura.Name = "txbAltura";
             this.txbAltura.Size = new System.Drawing.Size(115, 26);
             this.txbAltura.TabIndex = 11;
+            this.txbAltura.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbAltura_KeyPress);
             // 
             // txbCp
             // 
@@ -217,6 +223,7 @@ namespace Vendedor
             this.txbCp.Name = "txbCp";
             this.txbCp.Size = new System.Drawing.Size(96, 26);
             this.txbCp.TabIndex = 12;
+            this.txbCp.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbCp_KeyPress);
             // 
             // groupBox1
             // 
@@ -338,6 +345,10 @@ namespace Vendedor
             this.btnSalir.UseVisualStyleBackColor = true;
             this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // frmClientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -354,6 +365,7 @@ namespace Vendedor
             ((System.ComponentModel.ISupportInitialize)(this.dtgvClientes)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -390,5 +402,6 @@ namespace Vendedor
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnSalir;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

@@ -31,6 +31,8 @@ namespace Vendedor
             cmbMetodopago.Items.Add("Efectivo");
             cmbMetodopago.Items.Add("Tarjeta");
             cmbMetodopago.SelectedIndex = 0;
+            txbCvc.MaxLength = 3;
+            txbFechaTarjeta.MaxLength = 4;
             txbNombreTarjeta.Visible = false;
             txbFechaTarjeta.Visible = false;
             txbNumeroTarjeta.Visible = false;
@@ -72,7 +74,12 @@ namespace Vendedor
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                 e.RowIndex >= 0)
             {
+                string productoNombre = dtgvProductos.Rows[e.RowIndex].Cells[0].Value.ToString();
                 dtgvProductos.Rows.RemoveAt(senderGrid.CurrentRow.Index);
+                DetalleOrden detalleOrden = listaDetalles.FirstOrDefault(p => p.Producto.Nombre == productoNombre);
+                if (detalleOrden != null) {
+                    listaDetalles.Remove(detalleOrden);
+                }  
             }
         }
         private void cmbMetodopago_SelectedIndexChanged(object sender, EventArgs e)
@@ -104,13 +111,21 @@ namespace Vendedor
         private void btnGuardarOrden_Click(object sender, EventArgs e)
         {
             OrdenDeVenta ordenDeventa = new OrdenDeVenta();
+            bool camposTarjetaCompletos = false;
             if (cmbMetodopago.Text == "Tarjeta")
             {
                 tarjeta.CVC = txbCvc.Text;
                 tarjeta.NumeroTarjeta = txbNumeroTarjeta.Text;
                 tarjeta.NombreTarjeta = txbNombreTarjeta.Text;
                 tarjeta.FechaVencimiento = txbFechaTarjeta.Text;
-                ordenDeventa.MetodoDePago = tarjeta;
+                var textBoxCollection = new[] { txbNumeroTarjeta, txbCvc, txbNombreTarjeta, txbFechaTarjeta};
+                camposTarjetaCompletos = textBoxCollection.Any(t => String.IsNullOrWhiteSpace(t.Text));
+                if (camposTarjetaCompletos == false)
+                {
+                    ordenDeventa.MetodoDePago = tarjeta;
+                }
+                else
+                    MessageBox.Show("Complete todos los datos de la tarjeta");
             }
             if(cmbMetodopago.Text == "Efectivo")
             {
@@ -122,19 +137,22 @@ namespace Vendedor
             if (listaDetalles.Count > 0)
             {
                 ordenDeventa.Detalles = listaDetalles;
-                try
+                if (camposTarjetaCompletos == false)
                 {
-                    VentaBLL.GuardaOrdenVenta(ordenDeventa);
-                    MessageBox.Show("Orden guardada exitosamente");
-                }
-                catch (BLL_Modulo3.EXCEPCIONES.ExcepcionesNegocio exep)
-                {
-                    MessageBox.Show(exep.Descripcion);
+                    try
+                    {
+                        VentaBLL.GuardaOrdenVenta(ordenDeventa);
+                        MessageBox.Show("Orden guardada exitosamente");
+                    }
+                    catch (BLL_Modulo3.EXCEPCIONES.ExcepcionesNegocio exep)
+                    {
+                        MessageBox.Show(exep.Descripcion);
+                    }
                 }
             }
             else
             {
-                MessageBox.Show("Erro:Ingrese algun producto para generar la orden de venta");
+                MessageBox.Show("Error: Ingrese algun producto para generar la orden de venta");
             }
         }
 
@@ -142,9 +160,31 @@ namespace Vendedor
         {
             this.Close();
         }
+        
+
+        private void txbCantidad_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            soloNumeros(sender, e, txbCantidad);
+        }
+
+        private void txbNumeroTarjeta_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            soloNumeros(sender, e, txbNumeroTarjeta);
+        }
+
+        private void txbFechaTarjeta_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            soloNumeros(sender, e, txbFechaTarjeta);
+        }
+
+        private void txbCvc_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            soloNumeros(sender, e, txbCvc);
+        }
+
         public string ValidateProductoCantidad(Producto producto, string cantidad, string txbProducto)
         {
-            if ((producto == null || txbProducto == "") && !int.TryParse(txbCantidad.Text, out int num))
+            if ((producto == null || txbProducto == "") && cantidad == "")
             {
                 return "Producto y cantidad invalidos.";
             }
@@ -152,13 +192,13 @@ namespace Vendedor
             {
                 return "Producto invalido .";
             }
-            else if (!int.TryParse(txbCantidad.Text, out int num2))
+            else if (cantidad == "")
             {
                 return "Cantidad invalida.";
             }
             else if (!producto.Nombre.Contains(txbProducto) || txbProducto == "")
             {
-                return "Producto invalida.";
+                return "Producto invalido.";
             }
             else
             {
@@ -166,6 +206,16 @@ namespace Vendedor
             }
         }
 
-
+        public void soloNumeros(object sender, KeyPressEventArgs e, TextBox txb)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+            (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+                errorProvider1.SetError(txb, "No se admiten letras solo numeros");
+            }
+            else
+                errorProvider1.Clear();
+        }
     }
 }
